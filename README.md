@@ -1,9 +1,9 @@
 # Real-Time Sign Language Translator
 
 Translates static ASL alphabet signs (A to Z) into text in real time. Hand
-landmarks are detected with MediaPipe, normalized, and classified by a Random
-Forest. Ships as both a desktop application and a web platform, which share a
-single inference pipeline.
+landmarks are detected with MediaPipe, normalized, expanded into geometric hand
+features, and classified by a soft-voting MLP + RBF-SVM ensemble. Ships as both
+a desktop application and a web platform, which share a single inference pipeline.
 
 ## Results
 
@@ -15,10 +15,10 @@ measurements.
 |---|---|
 | Processed landmark samples | 5,712 |
 | Classes | 26 (A to Z) |
-| Features per sample | 63 (21 landmarks x 3 coordinates) |
-| Offline held-out test accuracy | **97.9%** (1,143 test samples) |
-| Macro F1 | **0.97** |
-| Classifier | Random Forest, 200 trees (scikit-learn) |
+| Raw landmarks / engineered features | 63 (21 x 3) -> 210 geometric features |
+| Offline held-out test accuracy | **98.6%** (1,143 test samples) |
+| Macro F1 | **0.98** |
+| Classifier | Voting ensemble: 2 MLPs + RBF SVC (scikit-learn) |
 | Landmark model | MediaPipe 0.10.35, Tasks API HandLandmarker |
 
 Per-class results are in `models/confusion_matrix.csv`.
